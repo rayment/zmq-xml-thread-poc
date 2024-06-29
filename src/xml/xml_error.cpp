@@ -9,10 +9,20 @@
 
 using namespace piper;
 
-xml_error_message::xml_error_message(piper::xml_error code,
+xml_error_message::xml_error_message(xml_error code,
                                      const std::string &msg) :
 	_code(code), _message(msg)
 {}
+
+xml_error_message::xml_error_message(const xml_error_message &other) :
+	_code(other._code), _message(other._message)
+{}
+
+xml_error_message
+xml_error_message::operator =(const xml_error_message &other)
+{
+	return xml_error_message(other._code, other._message);
+}
 
 xml_error
 xml_error_message::code() const

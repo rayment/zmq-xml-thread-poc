@@ -16,6 +16,7 @@ using namespace piper;
 xml_schema::xml_schema()
 {
 	_schema = nullptr; // prevent _reset from performing undefined free
+	_reset();
 }
 
 xml_schema::~xml_schema()

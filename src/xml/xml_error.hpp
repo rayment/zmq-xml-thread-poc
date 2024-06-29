@@ -28,7 +28,10 @@ namespace piper
 	{
 	public:
 		xml_error_message(xml_error code, const std::string &msg);
+		xml_error_message(const xml_error_message &other);
 		~xml_error_message() = default;
+
+		xml_error_message operator =(const xml_error_message &other);
 
 		xml_error          code       () const;
 		const std::string  code_string() const;
