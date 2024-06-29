@@ -1,5 +1,8 @@
 set(WITH_PERF_TOOL OFF)
 set(ZMQ_BUILD_TESTS OFF)
+if(WIN32)
+	set(POLLER epoll)
+endif() # WIN32
 FetchContent_Declare(
     zeromq
 	# Use master HEAD instead...
