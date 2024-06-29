@@ -7,6 +7,8 @@ set(SPDLOG_TAG_VERSION  1.14.0)
 
 include(FetchContent)
 
+set(BUILD_SHARED ON)
+set(BUILD_STATIC OFF)
 set(BUILD_SHARED_LIBS ON)
 
 include(cmake/deps/fmt.cmake)
