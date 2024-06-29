@@ -1,0 +1,16 @@
+set(LIBXML2_WITH_HTTP OFF)
+set(LIBXML2_WITH_ICONV OFF)
+set(LIBXML2_WITH_ICU OFF)
+set(LIBXML2_WITH_LZMA OFF)
+set(LIBXML2_WITH_MODULES OFF)
+set(LIBXML2_WITH_PROGRAMS OFF)
+set(LIBXML2_WITH_PYTHON OFF)
+set(LIBXML2_WITH_SAX1 OFF)
+set(LIBXML2_WITH_TESTS OFF)
+set(LIBXML2_WITH_ZLIB OFF)
+FetchContent_Declare(
+    libxml2
+    URL https://github.com/GNOME/libxml2/archive/refs/tags/v${LIBXML2_TAG_VERSION}.zip
+)
+FetchContent_MakeAvailable(libxml2)
+
