@@ -25,6 +25,8 @@ namespace piper
 		xml_schema();
 		~xml_schema();
 
+		friend class xml_validator;
+
 		const std::vector<xml_error_message> &
 			errors           () const;
 		bool is_valid        () const;

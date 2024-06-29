@@ -25,10 +25,13 @@ xml_error_message::code_string() const
 {
 	switch (_code)
 	{
-	case IOError:       return "IOError";
-	case InternalError: return "InternalError";
-	case ParseError:    return "ParseError";
-	default:            return "Unknown";
+	case IOError:              return "IOError";
+	case InternalError:        return "InternalError";
+	case InvalidDocumentError: return "InvalidDocumentError";
+	case InvalidSchemaError:   return "InvalidSchemaError";
+	case ParseError:           return "ParseError";
+	case ValidationError:      return "ValidationError";
+	default:                   return "Unknown";
 	}
 }
 

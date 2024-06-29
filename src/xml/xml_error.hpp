@@ -15,9 +15,13 @@ namespace piper
 
 	enum xml_error
 	{
+		// NOTE: Update code_string() whenever adding a new error.
 		IOError,
 		InternalError,
-		ParseError
+		InvalidDocumentError,
+		InvalidSchemaError,
+		ParseError,
+		ValidationError,
 	};
 
 	class xml_error_message
