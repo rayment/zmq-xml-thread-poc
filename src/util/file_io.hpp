@@ -15,8 +15,13 @@
 namespace piper
 {
 
-	bool file_read_to_buffer(const std::filesystem::path &path,
-							 std::vector<char> &buf);
+	enum file_io_error
+	{
+		None, FileNotFound, BadDestinationBuffer, IncompleteRead
+	};
+
+	file_io_error file_read_to_buffer(const std::filesystem::path &path,
+	                                  std::vector<char> &buf);
 
 } // piper
 

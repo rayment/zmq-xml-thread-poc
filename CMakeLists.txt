@@ -19,6 +19,7 @@ target_sources(
     src/main.cpp
     src/util/file_io.cpp
     src/xml/xml_document.cpp
+    src/xml/xml_error.cpp
 )
 
 target_include_directories(
