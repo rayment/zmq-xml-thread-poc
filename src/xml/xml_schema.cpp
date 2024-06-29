@@ -9,6 +9,7 @@
 #include <spdlog/spdlog.h>
 
 #include "util/file_io.hpp"
+#include "xml/xml_document.hpp"
 #include "xml/xml_schema.hpp"
 
 using namespace piper;
@@ -60,7 +61,13 @@ xml_schema::load_from_buffer(const char *buf,
 {
 	spdlog::trace("Loading XML schema from buffer.");
 	_reset();
-	xmlSchemaParserCtxtPtr context = xmlSchemaNewMemParserCtxt(buf, len);
+	if (!_doc.load_from_buffer(buf, len))
+	{
+		auto doc_errors = _doc.errors();
+		_errors.insert(_errors.end(), doc_errors.begin(), doc_errors.end());
+		return false;
+	}
+	xmlSchemaParserCtxtPtr context = xmlSchemaNewDocParserCtxt(_doc._doc);
 	if (!context)
 	{
 		_errors.push_back(xml_error_message(
@@ -115,4 +122,16 @@ xml_schema::load_from_string(const std::string &buf)
 	spdlog::trace("Loading XML schema from string.");
 	_reset();
 	return load_from_buffer(buf.c_str(), buf.length());
+}
+
+bool
+xml_schema::save_to_file(const std::filesystem::path &path) const
+{
+	return _doc.save_to_file(path);
+}
+
+std::string
+xml_schema::save_to_string() const
+{
+	return _doc.save_to_string();
 }

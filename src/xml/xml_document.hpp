@@ -27,6 +27,7 @@ namespace piper
 		~xml_document();
 
 		friend class xml_reader;
+		friend class xml_schema;
 		friend class xml_validator;
 		friend class xml_writer;
 
