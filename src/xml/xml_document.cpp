@@ -135,6 +135,14 @@ xml_document::load_from_string(const std::string &buf)
 	return load_from_buffer(buf.c_str(), buf.length());
 }
 
+xml_node
+xml_document::root_node()
+{
+	xmlNodePtr ptr = xmlDocGetRootElement(_doc);
+	assert(ptr != nullptr);
+	return xml_node(ptr);
+}
+
 bool
 xml_document::save_to_file(const std::filesystem::path &path) const
 {

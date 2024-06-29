@@ -16,6 +16,7 @@
 #include <vector>
 
 #include "xml/xml_error.hpp"
+#include "xml/xml_node.hpp"
 
 namespace piper
 {
@@ -26,20 +27,18 @@ namespace piper
 		xml_document();
 		~xml_document();
 
-		friend class xml_reader;
 		friend class xml_schema;
 		friend class xml_validator;
-		friend class xml_writer;
 
 		const std::vector<xml_error_message> &
-			errors           () const;
-		bool is_valid        () const;
-		bool load_from_buffer(const char *buf, std::size_t len);
-		bool load_from_file  (const std::filesystem::path &path);
-		bool load_from_string(const std::string &buf);
-
-		bool        save_to_file  (const std::filesystem::path &path) const;
-		std::string save_to_string() const;
+		            errors          () const;
+		bool        is_valid        () const;
+		bool        load_from_buffer(const char *buf, std::size_t len);
+		bool        load_from_file  (const std::filesystem::path &path);
+		bool        load_from_string(const std::string &buf);
+		xml_node    root_node       ();
+		bool        save_to_file    (const std::filesystem::path &path) const;
+		std::string save_to_string  () const;
 	private:
 		xmlDocPtr                      _doc;
 		std::vector<xml_error_message> _errors;

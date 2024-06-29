@@ -23,6 +23,7 @@ target_sources(
     src/util/file_io.cpp
     src/xml/xml_document.cpp
     src/xml/xml_error.cpp
+    src/xml/xml_node.cpp
     src/xml/xml_schema.cpp
     src/xml/xml_validator.cpp
 )
