@@ -1,6 +1,6 @@
 set(FMT_TAG_VERSION     10.2.1)
 set(JSON_TAG_VERSION    3.11.3)
-set(LIBXML2_TAG_VERSION 2.12.7)
+set(LIBXML2_TAG_VERSION 2.13.1)
 set(SPDLOG_TAG_VERSION  1.14.0)
 # TODO: Broken build on MinGW. Using master HEAD for now.
 #set(ZEROMQ_TAG_VERSION  4.3.5)
