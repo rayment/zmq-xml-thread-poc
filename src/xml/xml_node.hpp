@@ -23,6 +23,8 @@ namespace piper
 		xml_node(xmlNodePtr node);
 		~xml_node() = default;
 
+		friend class xml_document;
+
 		const std::map<std::string, std::string> attributes() const;
 		const std::vector<xml_node>              children  () const;
 		const std::string                        name      () const;
@@ -34,7 +36,7 @@ namespace piper
 		void set_value    (const std::string &value);
 
 	private:
-		xmlNodePtr  _node;
+		xmlNodePtr _node;
 	};
 
 } // piper

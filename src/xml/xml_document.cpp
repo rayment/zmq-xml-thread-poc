@@ -60,6 +60,34 @@ xml_document::_reset()
 	_valid = false;
 }
 
+bool
+xml_document::create_from_node(xml_node &root)
+{
+	spdlog::trace("Creating XML document from node.");
+	_reset();
+	_doc = xmlNewDoc(reinterpret_cast<const xmlChar *>("1.0"));
+	if (!_doc)
+	{
+		_errors.push_back(xml_error_message(
+			InternalError,
+			"Failed to generate blank XML document."));
+		return false;
+	}
+	xmlDocSetRootElement(_doc, root._node);
+	// According to docs, xmlDocSetRootElement should return nullptr since we're
+	// using a new document. As such, query for the element to ensure it was
+	// created.
+	if (!xmlDocGetRootElement(_doc))
+	{
+		_errors.push_back(xml_error_message(
+			InternalError,
+			"Failed to set root element of blank XML document."));
+		return false;
+	}
+	_valid = true;
+	return true;
+}
+
 const std::vector<xml_error_message> &
 xml_document::errors() const
 {

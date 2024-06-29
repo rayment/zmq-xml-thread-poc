@@ -30,6 +30,7 @@ namespace piper
 		friend class xml_schema;
 		friend class xml_validator;
 
+		bool        create_from_node(xml_node &root);
 		const std::vector<xml_error_message> &
 		            errors          () const;
 		bool        is_valid        () const;
