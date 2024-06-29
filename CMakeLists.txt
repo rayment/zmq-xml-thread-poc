@@ -11,6 +11,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 include(cmake/contrib.cmake)
+if(WIN32 AND MINGW)
+    include(cmake/mingw_deploy.cmake)
+endif() # WIN32 AND MINGW
 
 add_executable(piper)
 
