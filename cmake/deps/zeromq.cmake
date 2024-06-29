@@ -1,5 +1,6 @@
 set(WITH_PERF_TOOL OFF)
 set(ZMQ_BUILD_TESTS OFF)
+set(ENABLE_WS OFF)
 if(WIN32)
 	set(POLLER epoll)
 endif() # WIN32
