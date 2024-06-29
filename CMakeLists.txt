@@ -17,7 +17,12 @@ add_executable(piper)
 target_sources(
     piper PRIVATE
     src/main.cpp
+    src/util/file_io.cpp
     src/xml/xml_document.cpp
+)
+
+target_include_directories(
+    piper PRIVATE src
 )
 
 target_link_libraries(

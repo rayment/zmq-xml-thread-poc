@@ -9,6 +9,7 @@
 #include <libxml/tree.h>
 #include <spdlog/spdlog.h>
 
+#include "util/file_io.hpp"
 #include "xml/xml_document.hpp"
 
 using namespace piper;
@@ -53,28 +54,11 @@ xml_document::load_from_buffer(const char *buf,
 bool
 xml_document::load_from_file(const std::filesystem::path &path)
 {
-	spdlog::trace("Reading XML document from file.");
-	std::ifstream is(path, std::ios::binary | std::ios::ate);
-	_valid = false;
-	if (!is.is_open())
-	{
-		spdlog::error("File not found: '{}'", path.string());
-		return false;
-	}
-	auto len = is.tellg();
-	char *buf = new (std::nothrow) char[len];
-	if (!buf)
-		abort(); // out of memory
-	is.seekg(0, std::ios::beg);
-	is.read(buf, len);
-	bool success = !!is;
-	if (success)
-		// read was successful, now try and load the buffer
-		success = load_from_buffer(buf, len);
-	else
-		spdlog::error("Failed to read past byte #{}.", is.gcount());
-	delete[] buf;
-	return success;
+	std::vector<char> buf;
+	bool fail = !file_read_to_buffer(path, buf);
+	if (!fail)
+		fail = !load_from_buffer(buf.data(), buf.size());
+	return !fail;
 }
 
 bool
