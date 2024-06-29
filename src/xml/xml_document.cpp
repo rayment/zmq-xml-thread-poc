@@ -9,7 +9,7 @@
 #include <libxml/tree.h>
 #include <spdlog/spdlog.h>
 
-#include "xml_document.hpp"
+#include "xml/xml_document.hpp"
 
 using namespace piper;
 
