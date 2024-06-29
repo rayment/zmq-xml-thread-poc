@@ -32,3 +32,24 @@ piper::file_read_to_buffer(const std::filesystem::path &path,
 		return IncompleteRead;
 	return None;
 }
+
+file_io_error
+piper::file_write_from_buffer(const std::filesystem::path &path,
+                              const std::vector<char> &buf,
+                              bool append)
+{
+	spdlog::trace("Writing to file '{}' from buffer.", path.string());
+	auto mode = std::ios::binary | std::ios::out;
+	if (append)
+		mode |= std::ios::app;
+	if (buf.empty())
+		return None; // short
+	std::ofstream fs(path, mode);
+	if (!fs.is_open())
+		return FileOpenError;
+	fs.write(buf.data(), buf.size());
+	if (!fs)
+		return IncompleteWrite;
+	fs.close();
+	return None;
+}

@@ -17,11 +17,17 @@ namespace piper
 
 	enum file_io_error
 	{
-		None, FileNotFound, BadDestinationBuffer, IncompleteRead
+		None,
+		FileNotFound, FileOpenError,
+		IncompleteRead, IncompleteWrite,
+		BadDestinationBuffer,
 	};
 
-	file_io_error file_read_to_buffer(const std::filesystem::path &path,
-	                                  std::vector<char> &buf);
+	file_io_error file_read_to_buffer   (const std::filesystem::path &path,
+	                                     std::vector<char> &buf);
+	file_io_error file_write_from_buffer(const std::filesystem::path &path,
+										 const std::vector<char> &buf,
+	                                     bool append);
 
 } // piper
 

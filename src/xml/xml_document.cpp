@@ -37,6 +37,21 @@ xml_document::_context_error_handler(void *data,
 }
 
 void
+xml_document::_dump_to_buffer(xmlChar **buf,
+                              int *len) const
+{
+	assert(!!buf && !!len);
+	xmlDocDumpFormatMemoryEnc(_doc, buf, len, "utf-8", 1);
+	if (!buf)
+	{
+		// failed memory allocation
+		assert("Unexpected error. Aborting..." && false);
+		// unreachable
+		abort();
+	}
+}
+
+void
 xml_document::_reset()
 {
 	if (_doc)
@@ -119,4 +134,30 @@ xml_document::load_from_string(const std::string &buf)
 	spdlog::trace("Loading XML document from string.");
 	_reset();
 	return load_from_buffer(buf.c_str(), buf.length());
+}
+
+bool
+xml_document::save_to_file(const std::filesystem::path &path) const
+{
+	xmlChar *buf;
+	int len;
+	_dump_to_buffer(&buf, &len);
+	file_write_from_buffer(
+		path,
+		std::vector<char>(buf, buf+len),
+		false
+	);
+	xmlFree(buf);
+	return true;
+}
+
+std::string
+xml_document::save_to_string() const
+{
+	xmlChar *buf;
+	int len;
+	_dump_to_buffer(&buf, &len);
+	std::string result = std::string(reinterpret_cast<char *>(buf), len);
+	xmlFree(buf);
+	return std::move(result);
 }
