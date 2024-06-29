@@ -8,7 +8,6 @@
 #include <fmt/format.h>
 #include <fstream>
 #include <libxml/parser.h>
-#include <libxml/parserInternals.h>
 #include <libxml/tree.h>
 #include <spdlog/spdlog.h>
 
@@ -80,7 +79,7 @@ xml_document::load_from_buffer(const char *buf,
 	spdlog::trace("Loading XML document from buffer.");
 	_reset();
 	xmlInitParser();
-	xmlParserCtxtPtr context = xmlCreateMemoryParserCtxt(buf, len);
+	xmlParserCtxtPtr context = xmlNewParserCtxt();
 	if (!context)
 	{
 		_errors.push_back(xml_error_message(
