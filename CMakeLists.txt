@@ -27,6 +27,7 @@ target_sources(
     src/xml/xml_validator.cpp
     src/xml/node/xml_node.cpp
     src/xml/node/xml_node_element.cpp
+    src/xml/node/xml_node_text.cpp
 )
 
 target_include_directories(

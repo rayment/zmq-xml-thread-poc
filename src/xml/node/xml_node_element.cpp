@@ -51,6 +51,12 @@ xml_node_element::attributes() const
 	return attribs;
 }
 
+const std::string
+xml_node_element::name() const
+{
+	return std::string(reinterpret_cast<const char *>(_node->name));
+}
+
 void
 xml_node_element::remove_attribute(const std::string &key)
 {
@@ -70,4 +76,27 @@ xml_node_element::set_attribute(const std::string &key,
 	xmlSetProp(_node,
 	           reinterpret_cast<const xmlChar *>(key.c_str()),
 	           reinterpret_cast<const xmlChar *>(value.c_str()));
+}
+
+void
+xml_node_element::set_name(const std::string &name)
+{
+	xmlNodeSetName(_node, reinterpret_cast<const xmlChar *>(name.c_str()));
+}
+
+std::string
+xml_node_element::text() const
+{
+	// Same as in xml_node_text only that this will gather all child nodes.
+	xmlChar *val = xmlNodeGetContent(_node);
+	if (!val)
+	{
+		return std::string();
+	}
+	else
+	{
+		std::string str_val = reinterpret_cast<const char *>(val);
+		xmlFree(val);
+		return std::move(str_val);
+	}
 }

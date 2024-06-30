@@ -26,9 +26,13 @@ namespace piper
 		friend class xml_node;
 
 		const std::map<std::string, std::string>
-		     attributes      () const;
-		void remove_attribute(const std::string &key);
-		void set_attribute   (const std::string &key, const std::string &value);
+		                  attributes      () const;
+		const std::string name            () const;
+		void              remove_attribute(const std::string &key);
+		void              set_attribute   (const std::string &key,
+		                                   const std::string &value);
+		void              set_name        (const std::string &name);
+		std::string       text            () const;
 
 	private:
 		xml_node_element(xmlNodePtr node);

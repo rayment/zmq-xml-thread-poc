@@ -10,6 +10,7 @@
 
 #include "xml/node/xml_node.hpp"
 #include "xml/node/xml_node_element.hpp"
+#include "xml/node/xml_node_text.hpp"
 
 using namespace piper;
 
@@ -37,6 +38,9 @@ xml_node::children() const
 		case XML_ELEMENT_NODE:
 			children.push_back(xml_node_element(tree));
 			break;
+		case XML_TEXT_NODE:
+			children.push_back(xml_node_text(tree));
+			break;
 		}
 		tree = tree->next;
 	}
@@ -50,18 +54,11 @@ xml_node::is_element() const
 	return _node->type == XML_ELEMENT_NODE;
 }
 
-const std::string
-xml_node::name() const
+bool
+xml_node::is_text() const
 {
 	assert(_node != nullptr);
-	return std::string(reinterpret_cast<const char *>(_node->name));
-}
-
-void
-xml_node::set_name(const std::string &name)
-{
-	assert(_node != nullptr);
-	xmlNodeSetName(_node, reinterpret_cast<const xmlChar *>(name.c_str()));
+	return _node->type == XML_TEXT_NODE;
 }
 
 void
@@ -70,44 +67,4 @@ xml_node::set_parent(xml_node &parent)
 	assert(_node != nullptr);
 	auto ptr = xmlAddChild(parent._node, _node);
 	assert(ptr != nullptr);
-}
-
-void
-xml_node::set_value(const std::string &value)
-{
-	assert(_node != nullptr);
-	int ret = xmlNodeSetContent(_node, nullptr);
-	assert(ret == 0);
-	ret = xmlNodeAddContent(
-		_node,
-		reinterpret_cast<const xmlChar *>(value.c_str())
-	);
-	assert(ret == 0);
-}
-
-const std::string
-xml_node::value() const
-{
-	assert(_node != nullptr);
-	xmlNodePtr tree = _node->children;
-	while (tree)
-	{
-		if (tree->type != XML_TEXT_NODE)
-		{
-			tree = tree->next;
-			continue;
-		}
-		xmlChar *val = xmlNodeGetContent(_node);
-		if (!val)
-		{
-			return std::string();
-		}
-		else
-		{
-			std::string str_val = reinterpret_cast<const char *>(val);
-			xmlFree(val);
-			return std::move(str_val);
-		}
-	}
-	return std::string();
 }

@@ -19,17 +19,14 @@ namespace piper
 	class xml_node
 	{
 	public:
-		~xml_node();
+		virtual ~xml_node();
 
 		friend class xml_document;
 
 		const std::vector<xml_node> children  () const;
 		bool                        is_element() const;
-		const std::string           name      () const;
-		void                        set_name  (const std::string &name);
+		bool                        is_text   () const;
 		void                        set_parent(xml_node &parent);
-		void                        set_value (const std::string &value);
-		const std::string           value     () const;
 
 	protected:
 		xmlNodePtr _node;
