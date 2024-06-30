@@ -9,6 +9,7 @@
 #include <spdlog/spdlog.h>
 
 #include "xml/node/xml_node.hpp"
+#include "xml/node/xml_node_cdata.hpp"
 #include "xml/node/xml_node_element.hpp"
 #include "xml/node/xml_node_text.hpp"
 
@@ -35,6 +36,9 @@ xml_node::children() const
 	{
 		switch (tree->type)
 		{
+		case XML_CDATA_SECTION_NODE:
+			children.push_back(xml_node_cdata(tree));
+			break;
 		case XML_ELEMENT_NODE:
 			children.push_back(xml_node_element(tree));
 			break;
