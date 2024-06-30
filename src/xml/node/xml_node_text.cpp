@@ -41,7 +41,7 @@ xml_node_text::set_text(const std::string &data)
 }
 
 std::string
-xml_node_text::text()
+xml_node_text::text() const
 {
 	xmlChar *val = xmlNodeGetContent(_node);
 	if (!val)

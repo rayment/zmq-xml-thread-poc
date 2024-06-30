@@ -24,7 +24,7 @@ namespace piper
 		friend class xml_node;
 
 		void set_text   (const std::string &data);
-		std::string text();
+		std::string text() const;
 
 	private:
 		xml_node_text(xmlNodePtr node);
