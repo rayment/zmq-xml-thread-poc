@@ -73,6 +73,6 @@ void
 xml_node::set_parent(xml_node &parent)
 {
 	assert(_node != nullptr);
-	auto ptr = xmlAddChild(parent._node, _node);
-	assert(ptr != nullptr);
+	_node = xmlAddChild(parent._node, _node);
+	assert(_node != nullptr);
 }
