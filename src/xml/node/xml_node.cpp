@@ -56,6 +56,20 @@ xml_node::children() const
 }
 
 bool
+xml_node::is_cdata() const
+{
+	assert(_node != nullptr);
+	return _node->type == XML_CDATA_SECTION_NODE;
+}
+
+bool
+xml_node::is_comment() const
+{
+	assert(_node != nullptr);
+	return _node->type == XML_COMMENT_NODE;
+}
+
+bool
 xml_node::is_element() const
 {
 	assert(_node != nullptr);

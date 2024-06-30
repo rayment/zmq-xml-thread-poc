@@ -24,6 +24,8 @@ namespace piper
 		friend class xml_document;
 
 		const std::vector<xml_node> children  () const;
+		bool                        is_cdata  () const;
+		bool                        is_comment() const;
 		bool                        is_element() const;
 		bool                        is_text   () const;
 		void                        set_parent(xml_node &parent);
