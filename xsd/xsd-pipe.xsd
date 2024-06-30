@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ xsd-pipe.xsd
+
+ Author       : Finn Rayment <finn@rayment.fr>
+ Date created : 29/06/2024
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="urn:rayment:piper"
+           targetNamespace="urn:rayment:piper"
+           elementFormDefault="qualified"
+           version="0.0.0">
+    <!-- UUID/GUID type (e.g. {662385fa-2e80-4f70-95fe-c3bce90797f5} or 91e5688a-4a3f-4e4f-ab6f-27db9c6eea44) -->
+    <xs:simpleType name="uuid">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})|(\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\})" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Version ID type (e.g. 1 or 2.6, 0.0.1) -->
+    <xs:simpleType name="versionIdentifier">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]+(\.[0-9]+){0,2}" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Connection type for joining taps, filters and sinks -->
+    <xs:complexType name="connectionType">
+        <xs:attribute name="from" type="tns:uuid" use="required" />
+        <xs:attribute name="to" type="tns:uuid" use="required" />
+        <xs:attribute name="type" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="error" />
+                    <xs:enumeration value="out" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <!-- Parent type of all taps, filters and sinks -->
+    <xs:complexType name="elementBaseType">
+        <xs:attribute name="id" type="tns:uuid" use="required" />
+        <xs:attribute name="name" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <!-- Collection of all permitted taps, filters and sinks -->
+    <xs:complexType name="elementCollection">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <!-- Taps -->
+            <xs:element name="tap-file">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="tns:elementBaseType">
+                            <xs:all>
+                                <xs:element name="filename" type="xs:string" minOccurs="1" maxOccurs="1" />
+                            </xs:all>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <!-- Filters -->
+            <!-- Sinks -->
+            <xs:element name="sink-file">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="tns:elementBaseType">
+                            <xs:all>
+                                <xs:element name="filename" type="xs:string" minOccurs="1" maxOccurs="1" />
+                                <xs:element name="append" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+                            </xs:all>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <!-- Pipe definition -->
+    <xs:element name="pipe">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1" />
+                <xs:element name="author" type="xs:string" minOccurs="1" maxOccurs="1" />
+                <xs:element name="description" type="xs:string" minOccurs="1" maxOccurs="1" />
+                <xs:element name="elements" type="tns:elementCollection" minOccurs="0" maxOccurs="1" />
+                <xs:element name="connections" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:choice minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="connection" type="tns:connectionType" />
+                        </xs:choice>
+                    </xs:complexType>
+                </xs:element>
+            </xs:all>
+            <xs:attribute name="schema" type="tns:versionIdentifier" use="required" />
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -33,7 +33,7 @@ target_sources(
 )
 
 target_include_directories(
-    piper PRIVATE src
+    piper PRIVATE src ${CMAKE_BINARY_DIR}/gen
 )
 
 target_link_libraries(
@@ -44,3 +44,6 @@ target_link_libraries(
     spdlog::spdlog
     libzmq
 )
+
+file(READ xsd/xsd-pipe.xsd XSD_FILE_CONTENT)
+configure_file(xsd/xsd_pipe.hpp.in gen/xsd/xsd_pipe.hpp @ONLY)

@@ -1,0 +1,8 @@
+#ifndef ZMQ_XML_THREAD_POC_XSD_PIPE_HPP
+#define ZMQ_XML_THREAD_POC_XSD_PIPE_HPP
+
+constexpr const char *xsd_definition_pipe = R"xml_xsd_escape(
+@XSD_FILE_CONTENT@
+)xml_xsd_escape";
+
+#endif //ZMQ_XML_THREAD_POC_XSD_PIPE_HPP
