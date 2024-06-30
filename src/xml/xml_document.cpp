@@ -61,9 +61,9 @@ xml_document::_reset()
 }
 
 bool
-xml_document::create_from_node(xml_node &root)
+xml_document::create_blank(const std::string &root_name)
 {
-	spdlog::trace("Creating XML document from node.");
+	spdlog::trace("Creating new blank XML document.");
 	_reset();
 	_doc = xmlNewDoc(reinterpret_cast<const xmlChar *>("1.0"));
 	if (!_doc)
@@ -73,15 +73,13 @@ xml_document::create_from_node(xml_node &root)
 			"Failed to generate blank XML document."));
 		return false;
 	}
-	xmlDocSetRootElement(_doc, root._node);
-	// According to docs, xmlDocSetRootElement should return nullptr since we're
-	// using a new document. As such, query for the element to ensure it was
-	// created.
-	if (!xmlDocGetRootElement(_doc))
+	const xmlChar *name = reinterpret_cast<const xmlChar *>(root_name.c_str());
+	xmlNodePtr root = xmlNewDocNode(_doc, nullptr, name, nullptr);
+	if (!root)
 	{
 		_errors.push_back(xml_error_message(
 			InternalError,
-			"Failed to set root element of blank XML document."));
+			"Failed to generate root XML document node."));
 		return false;
 	}
 	_valid = true;
