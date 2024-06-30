@@ -83,6 +83,15 @@ xml_document::create_blank(const std::string &root_name)
 			"Failed to generate root XML document node."));
 		return false;
 	}
+	xmlDocSetRootElement(_doc, root);
+	if (!xmlDocGetRootElement(_doc))
+	{
+		_errors.push_back(xml_error_message(
+			InternalError,
+			"Failed to set root XML document element."));
+		xmlFreeNode(root);
+		return false;
+	}
 	_valid = true;
 	return true;
 }
