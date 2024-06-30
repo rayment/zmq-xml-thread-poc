@@ -8,7 +8,6 @@
 #ifndef ZMQ_XML_THREAD_POC_XML_NODE_CDATA_HPP
 #define ZMQ_XML_THREAD_POC_XML_NODE_CDATA_HPP
 
-#include <map>
 #include <string>
 
 #include "xml/node/xml_node.hpp"
