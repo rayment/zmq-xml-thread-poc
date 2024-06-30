@@ -13,6 +13,7 @@
 
 #include "util/file_io.hpp"
 #include "xml/xml_document.hpp"
+#include "xml/node/xml_node_element.hpp"
 
 using namespace piper;
 
@@ -161,12 +162,13 @@ xml_document::load_from_string(const std::string &buf)
 	return load_from_buffer(buf.c_str(), buf.length());
 }
 
-xml_node
+xml_node_element
 xml_document::root_node()
 {
 	xmlNodePtr ptr = xmlDocGetRootElement(_doc);
 	assert(ptr != nullptr);
-	return xml_node(ptr);
+	assert(ptr->type == XML_ELEMENT_NODE);
+	return xml_node_element(ptr);
 }
 
 bool
