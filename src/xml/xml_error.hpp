@@ -10,6 +10,8 @@
 
 #include <string>
 
+#include "util/error_message.hpp"
+
 namespace piper
 {
 
@@ -24,22 +26,26 @@ namespace piper
 		ValidationError,
 	};
 
-	class xml_error_message
+	class xml_error_message : public error_message<xml_error>
 	{
 	public:
-		xml_error_message(xml_error code, const std::string &msg);
-		xml_error_message(const xml_error_message &other);
-		~xml_error_message() = default;
+		using error_message<xml_error>::error_message;
+		using error_message<xml_error>::operator=;
 
-		xml_error_message operator =(const xml_error_message &other);
-
-		xml_error          code       () const;
-		const std::string  code_string() const;
-		const std::string &message    () const;
-
-	private:
-		const xml_error   _code;
-		const std::string _message;
+		virtual const std::string
+		code_string() const override
+		{
+			switch (_code)
+			{
+			case IOError:              return "IOError";
+			case InternalError:        return "InternalError";
+			case InvalidDocumentError: return "InvalidDocumentError";
+			case InvalidSchemaError:   return "InvalidSchemaError";
+			case ParseError:           return "ParseError";
+			case ValidationError:      return "ValidationError";
+			default:                   return "Unknown";
+			}
+		}
 	};
 
 } // piper
