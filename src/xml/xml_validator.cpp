@@ -63,7 +63,7 @@ xml_validator::validate(piper::xml_document &document,
 	}
 	xmlSchemaSetValidStructuredErrors(context, _context_error_handler, this);
 	int ret = xmlSchemaValidateDoc(context, document._doc);
-	if (ret < 0)
+	if (ret != 0)
 		return false; // error generation is handled by _context_error_handler
 	xmlSchemaFreeValidCtxt(context);
 	return true;
