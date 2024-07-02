@@ -42,8 +42,15 @@ uuid::~uuid()
 uuid::operator std::string() const
 {
 	std::stringstream ss;
+	int pos = 0;
+	ss << std::hex;
 	for (int i : _bytes) // this MUST be 'int' for std::hex to work properly
-		ss << std::hex << i;
+	{
+		if (pos == 4 || pos == 6 || pos == 8 || pos == 10)
+			ss << "-";
+		ss << i;
+		++pos;
+	}
 	return ss.str();
 }
 
