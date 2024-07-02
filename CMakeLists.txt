@@ -20,6 +20,7 @@ add_executable(piper)
 target_sources(
     piper PRIVATE
     src/main.cpp
+    src/types/uuid.cpp
     src/util/file_io.cpp
     src/xml/xml_document.cpp
     src/xml/xml_schema.cpp
