@@ -33,7 +33,9 @@ xml_document::_context_error_handler(void *data,
 									 const xmlError *error)
 {
 	xml_document *doc = static_cast<xml_document *>(data);
-	doc->_errors.push_back(xml_error_message(ParseError, error->message));
+	doc->_errors.push_back(xml_error_message(
+		xml_error::ParseError,
+		error->message));
 }
 
 void
@@ -70,7 +72,7 @@ xml_document::create_blank(const std::string &root_name)
 	if (!_doc)
 	{
 		_errors.push_back(xml_error_message(
-			InternalError,
+			xml_error::InternalError,
 			"Failed to generate blank XML document."));
 		return false;
 	}
@@ -79,7 +81,7 @@ xml_document::create_blank(const std::string &root_name)
 	if (!root)
 	{
 		_errors.push_back(xml_error_message(
-			InternalError,
+			xml_error::InternalError,
 			"Failed to generate root XML document node."));
 		return false;
 	}
@@ -87,7 +89,7 @@ xml_document::create_blank(const std::string &root_name)
 	if (!xmlDocGetRootElement(_doc))
 	{
 		_errors.push_back(xml_error_message(
-			InternalError,
+			xml_error::InternalError,
 			"Failed to set root XML document element."));
 		xmlFreeNode(root);
 		return false;
@@ -119,7 +121,7 @@ xml_document::load_from_buffer(const char *buf,
 	if (!context)
 	{
 		_errors.push_back(xml_error_message(
-			InternalError,
+			xml_error::InternalError,
 			"Failed to generate XML parser context."));
 		return false;
 	}
@@ -143,13 +145,13 @@ xml_document::load_from_file(const std::filesystem::path &path)
 	{
 	case FileNotFound:
 		_errors.push_back(xml_error_message(
-			IOError,
+			xml_error::IOError,
 			fmt::format("File not found: '{}'",
 			            path.string())));
 		break;
 	case IncompleteRead:
 		_errors.push_back(xml_error_message(
-			IOError,
+			xml_error::IOError,
 			fmt::format("Failed to read XML document from file '{}'",
 			            path.string())));
 		break;

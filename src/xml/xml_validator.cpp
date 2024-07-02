@@ -20,7 +20,7 @@ xml_validator::_context_error_handler(void *data,
 {
 	xml_validator *validator = static_cast<xml_validator*>(data);
 	validator->_errors.push_back(
-		xml_error_message(ValidationError, error->message));
+		xml_error_message(xml_error::ValidationError, error->message));
 }
 
 void
@@ -42,13 +42,13 @@ xml_validator::validate(piper::xml_document &document,
 	if (!document.is_valid())
 	{
 		_errors.push_back(xml_error_message(
-			InvalidDocumentError,
+			xml_error::InvalidDocumentError,
 			"Cannot validate because the document is invalid."));
 	}
 	if (!schema.is_valid())
 	{
 		_errors.push_back(xml_error_message(
-			InvalidSchemaError,
+			xml_error::InvalidSchemaError,
 			"Cannot validate because the schema is invalid."));
 	}
 	if (!document.is_valid() || !schema.is_valid())
@@ -57,7 +57,7 @@ xml_validator::validate(piper::xml_document &document,
 	if (!context)
 	{
 		_errors.push_back(xml_error_message(
-			InternalError,
+			xml_error::InternalError,
 			"Failed to generate XML validation context."));
 		return false;
 	}

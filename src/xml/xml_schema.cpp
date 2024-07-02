@@ -30,7 +30,9 @@ xml_schema::_context_error_handler(void *data,
                                    const xmlError *error)
 {
 	xml_schema *schema = static_cast<xml_schema *>(data);
-	schema->_errors.push_back(xml_error_message(ParseError, error->message));
+	schema->_errors.push_back(xml_error_message(
+		xml_error::ParseError,
+		error->message));
 }
 
 void
@@ -71,7 +73,7 @@ xml_schema::load_from_buffer(const char *buf,
 	if (!context)
 	{
 		_errors.push_back(xml_error_message(
-			InternalError,
+			xml_error::InternalError,
 			"Failed to generate XML schema parser context."));
 		return false;
 	}
@@ -96,13 +98,13 @@ xml_schema::load_from_file(const std::filesystem::path &path)
 	{
 	case FileNotFound:
 		_errors.push_back(xml_error_message(
-			IOError,
+			xml_error::IOError,
 			fmt::format("File not found: '{}'",
 			            path.string())));
 		break;
 	case IncompleteRead:
 		_errors.push_back(xml_error_message(
-			IOError,
+			xml_error::IOError,
 			fmt::format("Failed to read XML schema from file '{}'",
 			            path.string())));
 		break;

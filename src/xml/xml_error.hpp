@@ -15,7 +15,7 @@
 namespace piper
 {
 
-	enum xml_error
+	enum class xml_error
 	{
 		// NOTE: Update code_string() whenever adding a new error.
 		IOError,
@@ -37,13 +37,13 @@ namespace piper
 		{
 			switch (_code)
 			{
-			case IOError:              return "IOError";
-			case InternalError:        return "InternalError";
-			case InvalidDocumentError: return "InvalidDocumentError";
-			case InvalidSchemaError:   return "InvalidSchemaError";
-			case ParseError:           return "ParseError";
-			case ValidationError:      return "ValidationError";
-			default:                   return "Unknown";
+			case xml_error::IOError:              return "IOError";
+			case xml_error::InternalError:        return "InternalError";
+			case xml_error::InvalidDocumentError: return "InvalidDocumentError";
+			case xml_error::InvalidSchemaError:   return "InvalidSchemaError";
+			case xml_error::ParseError:           return "ParseError";
+			case xml_error::ValidationError:      return "ValidationError";
+			default:                              return "Unknown";
 			}
 		}
 	};
