@@ -20,6 +20,12 @@ add_executable(piper)
 target_sources(
     piper PRIVATE
     src/main.cpp
+    src/processor/filter.cpp
+    src/processor/node.cpp
+    src/processor/sink.cpp
+    src/processor/tap.cpp
+    src/processor/sinks/sink_file.cpp
+    src/processor/taps/tap_file.cpp
     src/types/uuid.cpp
     src/util/file_io.cpp
     src/xml/xml_document.cpp
