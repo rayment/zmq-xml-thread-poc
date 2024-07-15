@@ -17,6 +17,43 @@ node::node(const uuid &id) : _uuid(id)
 node::~node()
 {}
 
+bool
+node::operator <(const node &other) const
+{
+	return _uuid < other._uuid;
+}
+
+bool
+node::operator >(const node &other) const
+{
+	return _uuid > other._uuid;
+}
+
+bool
+node::operator <=(const node &other) const
+{
+	return _uuid <= other._uuid;
+}
+
+
+bool
+node::operator >=(const node &other) const
+{
+	return _uuid >= other._uuid;
+}
+
+bool
+node::operator ==(const node &other) const
+{
+	return _uuid == other._uuid;
+}
+
+bool
+node::operator !=(const node &other) const
+{
+	return _uuid != other._uuid;
+}
+
 void
 node::close()
 {

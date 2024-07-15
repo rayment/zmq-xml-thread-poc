@@ -27,6 +27,13 @@ namespace piper
 		node(const uuid &id);
 		virtual ~node() = 0;
 
+		bool operator  <(const node &other) const;
+		bool operator  >(const node &other) const;
+		bool operator <=(const node &other) const;
+		bool operator >=(const node &other) const;
+		bool operator ==(const node &other) const;
+		bool operator !=(const node &other) const;
+
 		void                   close    ();
 		const uuid            &id       () const;
 		bool                   is_closed() const;
