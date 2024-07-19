@@ -348,3 +348,13 @@ multidigraph<V, E>::root_vertices()
 	}
 	return roots;
 }
+
+template<typename V, typename E>
+std::vector<std::reference_wrapper<
+	typename multidigraph<V, E>::vertex>>
+multidigraph<V, E>::vertices()
+{
+	std::vector<std::reference_wrapper<vertex>> verts;
+	verts.insert(verts.begin(), _vertices.begin(), _vertices.end());
+	return verts;
+}

@@ -109,6 +109,7 @@ namespace piper
 
 		std::vector<std::reference_wrapper<vertex>> leaf_vertices();
 		std::vector<std::reference_wrapper<vertex>> root_vertices();
+		std::vector<std::reference_wrapper<vertex>> vertices();
 
 	private:
 		int _edge_counter;
