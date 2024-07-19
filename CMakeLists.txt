@@ -22,6 +22,7 @@ target_sources(
     src/main.cpp
     src/processor/filter.cpp
     src/processor/node.cpp
+    src/processor/pipe.cpp
     src/processor/sink.cpp
     src/processor/tap.cpp
     src/processor/sinks/sink_file.cpp
