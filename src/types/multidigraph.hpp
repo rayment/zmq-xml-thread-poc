@@ -107,6 +107,7 @@ namespace piper
 		bool remove_edge(const edge &e);
 		bool remove_vertex(const vertex &v);
 
+		std::vector<std::reference_wrapper<vertex>> leaf_vertices();
 		std::vector<std::reference_wrapper<vertex>> root_vertices();
 
 	private:

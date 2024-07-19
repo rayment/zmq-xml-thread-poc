@@ -314,6 +314,20 @@ multidigraph<V, E>::remove_vertex(const vertex &v)
 template<typename V, typename E>
 std::vector<std::reference_wrapper<
 	typename multidigraph<V, E>::vertex>>
+multidigraph<V, E>::leaf_vertices()
+{
+	std::vector<std::reference_wrapper<vertex>> roots;
+	for (auto &vertex : _vertices)
+	{
+		if (vertex._edges_out.size() == 0)
+			roots.emplace_back(vertex);
+	}
+	return roots;
+}
+
+template<typename V, typename E>
+std::vector<std::reference_wrapper<
+	typename multidigraph<V, E>::vertex>>
 multidigraph<V, E>::root_vertices()
 {
 	std::vector<std::reference_wrapper<vertex>> roots;
