@@ -32,9 +32,6 @@ namespace piper
 		const std::string &description      () const;
 		pipe_graph        &graph            ();
 		const std::string &name             () const;
-		bool               remove_connection(const uuid &from, const uuid &to,
-		                                     pipe_connection_type type);
-		bool               remove_node      (const uuid &id);
 		void               set_author       (const std::string &author);
 		void               set_description  (const std::string &description);
 		void               set_name         (const std::string &name);
